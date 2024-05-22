@@ -1,7 +1,7 @@
 pipeline {
     agent {
         dockerfile {
-            dir './path/to/dockerfile'
+            dir './home/ubuntu/test-project/dockerfile'
             label 'my-label'
             additionalBuildArgs '--build-arg version=1.0'
             args '-v /tmp:/tmp'
@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'gradle --version'
+                sh 'maven --version'
             }
         }
     }
