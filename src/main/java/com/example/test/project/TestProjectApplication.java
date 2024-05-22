@@ -7,7 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TestProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TestProjectApplication.class, args);
+		SpringApplication.run(TestProjectApplication.class, args); }
+
+	
+        @GetMapping("/")
+        public String home() {
+            return "Hello World";
+	
 	}
 
 }
