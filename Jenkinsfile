@@ -1,41 +1,30 @@
-node {
-    def WORKSPACE = "/var/lib/jenkins/workspace/test-project"
-    def dockerImageTag = "springboot-deploy${env.BUILD_NUMBER}"
-try{
-    stage('Clone Repo') {
-        // for display purposes
-        // Get some code from a GitHub repository
-        git url: 'https://github.com/snehaNetzone/test-project.git',
-            credentialsId: 'snehaNetzone',
-            branch: 'master'
-     }
-    pipeline {
-      agent {
-        dockerfile {
-            dir './home/ubuntu/test-project/dockerfile'
-            label 'my-label'
-            additionalBuildArgs '--build-arg version=1.0'
-            args '-v /tmp:/tmp'
-        }
-    }
+pipeline {
+    agent any
+
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                sh 'maven --version'
+                checkout scm
+            }
+        }
+
+        stage('Build JAR') {
+            steps {
+                sh 'mvn clean install' // Or use Gradle if your project uses it
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t my-spring-app .'
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                sh 'docker run -d -p 9000:9000 my-spring-app'
             }
         }
     }
-}   
+}
 
-   stage('Build docker') {
-         dockerImage = docker.build("springboot-deploy:${env.BUILD_NUMBER}")
-    }
-    stage('Deploy docker'){
-          echo "Docker Image Tag Name: ${dockerImageTag}"
-          sh "docker stop test-project || true && docker rm springboot-deploy || true"
-          sh "docker run --name springboot-deploy -d -p 9000:8080 springboot-deploy:${env.BUILD_NUMBER}"
-    }
-}catch(e){
-    
-    throw e
-   }
