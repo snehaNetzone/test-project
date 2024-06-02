@@ -10,7 +10,7 @@ public class TestProjectApplication {
 		SpringApplication.run(TestProjectApplication.class, args); }
 
 	
-        @GetMapping("/")
+        @GetMapping("/string")
         public String home() {
             return "Hello World";
 	
