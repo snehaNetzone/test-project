@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build JAR') {
             steps {
-                sh 'mvn clean install' // Or use Gradle if your project uses it
+                sh 'mvn clean install' 
             }
         }
 
