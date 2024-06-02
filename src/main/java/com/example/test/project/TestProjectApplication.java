@@ -1,13 +1,33 @@
-package com.example.springbootdeploy;
+package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringbootDeployApplication {
+public class DemoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringbootDeployApplication.class, args);
+		SpringApplication.run(DemoApplication.class, args);
 	}
 
 }
+
+
+package com.example.springbootdeploy;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HelloController {
+
+       @RequestMapping("/hello")
+       public String hello(){
+            return "Hello World";
+           
+           }
+ 
+
+}
+
+          
